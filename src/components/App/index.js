@@ -12,20 +12,33 @@ import LoginPage from '../LoginPage';
 import ReduxApolloProvider from './ReduxApolloProvider';
 import createApplicationStore from '../../store';
 
+function getPersistedState() {
+  try {
+    const stateJson = localStorage.getItem('state');
+    if (!stateJson) return {};
+    return JSON.parse(stateJson);
+  } catch (error) {
+    return {};
+  }
+}
+
+function persistState(state) {
+  localStorage.setItem('state', JSON.stringify(state));
+}
+
 export default class App extends React.PureComponent<{}, void> {
   store = createApplicationStore({
     initialState: {
-      token: localStorage.getItem('token'),
+      token: null,
+      ...getPersistedState(),
     },
   });
 
   componentDidMount() {
     this.store.subscribe(() => {
-      const { token } = this.store.getState();
+      const state = this.store.getState();
 
-      if (token) {
-        localStorage.setItem('token', token);
-      }
+      persistState(state);
     });
   }
 
