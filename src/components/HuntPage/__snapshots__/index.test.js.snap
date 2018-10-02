@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<div
+  className="container"
+>
+  <div
+    className="text-center"
+  >
+    <h5>
+      Please login to view this page.
+    </h5>
+    <div
+      to="/login"
+    >
+      Login
+    </div>
+  </div>
+</div>
+`;
