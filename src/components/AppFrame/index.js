@@ -4,6 +4,7 @@ import * as React from 'react';
 import { Container, Row, Col } from 'reactstrap';
 
 import NavigationBar from './NavigationBar';
+import IntroductionJumbotron from './IntroductionJumbotron';
 
 type Props = {
   children: React.Node,
@@ -11,11 +12,13 @@ type Props = {
 
 type State = {
   isCollapseOpen: boolean,
+  isIntroductionDismissed: boolean,
 };
 
 export default class AppFrame extends React.Component<Props, State> {
   state = {
     isCollapseOpen: false,
+    isIntroductionDismissed: false,
   };
 
   onToggleCollapseClick = () => {
@@ -23,9 +26,13 @@ export default class AppFrame extends React.Component<Props, State> {
     this.setState({ isCollapseOpen: !isCollapseOpen });
   };
 
+  onIntroductionDismissClick = () => {
+    this.setState({ isIntroductionDismissed: true });
+  };
+
   render() {
     const { children } = this.props;
-    const { isCollapseOpen } = this.state;
+    const { isCollapseOpen, isIntroductionDismissed } = this.state;
 
     return (
       <Container>
@@ -37,6 +44,13 @@ export default class AppFrame extends React.Component<Props, State> {
             />
           </Col>
         </Row>
+        {!isIntroductionDismissed && (
+          <Row>
+            <Col>
+              <IntroductionJumbotron onDismissClick={this.onIntroductionDismissClick} />
+            </Col>
+          </Row>
+        )}
         <Row>
           <Col>{children}</Col>
         </Row>
