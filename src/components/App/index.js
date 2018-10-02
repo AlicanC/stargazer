@@ -23,7 +23,9 @@ export default class App extends React.PureComponent<{}, void> {
     this.store.subscribe(() => {
       const { token } = this.store.getState();
 
-      localStorage.setItem('token', token);
+      if (token) {
+        localStorage.setItem('token', token);
+      }
     });
   }
 

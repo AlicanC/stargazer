@@ -11,17 +11,35 @@ import ProfileView from './ProfileView';
 type Props = {
   data: Object,
   dispatch: Object,
+  history: Object,
 };
 
 class LoginPage extends React.PureComponent<Props, void> {
+  async componentDidMount() {
+    const { dispatch, history } = this.props;
+
+    const params = new URLSearchParams(history.location.search);
+    const token = params.get('token');
+
+    if (token) {
+      dispatch.login(token);
+    }
+  }
+
   onLoginClick = () => {
-    const { dispatch } = this.props;
+    // const { dispatch } = this.props;
+    // const token = prompt('Your GitHub token');
+    // if (!token) return;
+    // dispatch.login(token);
 
-    const token = prompt('Your GitHub token');
+    const config = {
+      clientId: 'f84cc67f3f769f36f662',
+      redirectUri: 'https://alicanc-stargazer.herokuapp.com/github_callback',
+    };
 
-    if (!token) return;
-
-    dispatch.login(token);
+    const { clientId, redirectUri } = config;
+    const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}`;
+    window.open(authUrl);
   };
 
   onLogoutClick = () => {
@@ -61,10 +79,10 @@ class LoginPage extends React.PureComponent<Props, void> {
             </Row>
             <Row>
               <Col className="text-center">
-                <p>
+                {/* <p>
                   Create a GitHub token <a href="https://github.com/settings/tokens/new">here</a>{' '}
                   and login.
-                </p>
+                </p> */}
                 <Button onClick={this.onLoginClick} color="primary">
                   Login
                 </Button>
