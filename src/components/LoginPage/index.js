@@ -61,6 +61,10 @@ class LoginPage extends React.Component<Props, void> {
             </Row>
             <Row>
               <Col className="text-center">
+                <p>
+                  Create a GitHub token <a href="https://github.com/settings/tokens/new">here</a>{' '}
+                  and login.
+                </p>
                 <Button onClick={this.onLoginClick} color="primary">
                   Login
                 </Button>
