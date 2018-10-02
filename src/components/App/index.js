@@ -2,35 +2,36 @@
 
 import * as React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { ApolloProvider } from 'react-apollo';
+import { Provider } from 'react-redux';
 
 import AppFrame from '../AppFrame';
 import HomePage from '../HomePage';
 import HuntPage from '../HuntPage';
 import LoginPage from '../LoginPage';
 
-import createApolloClient from './createApolloClient';
+import ReduxApolloProvider from './ReduxApolloProvider';
+import createApplicationStore from '../../store';
 
 export default class App extends React.Component<{}, void> {
-  getApolloClientConfig = () => ({
-    token: localStorage.getItem('token'),
+  store = createApplicationStore({
+    initialState: {
+      token: localStorage.getItem('token'),
+    },
   });
 
-  apolloClient = createApolloClient(this.getApolloClientConfig);
-
   render() {
-    const { apolloClient } = this;
-
     return (
-      <ApolloProvider client={apolloClient}>
-        <Router>
-          <AppFrame>
-            <Route exact path="/" component={HomePage} />
-            <Route path="/hunt" component={HuntPage} />
-            <Route path="/login" component={LoginPage} />
-          </AppFrame>
-        </Router>
-      </ApolloProvider>
+      <Provider store={this.store}>
+        <ReduxApolloProvider>
+          <Router>
+            <AppFrame>
+              <Route exact path="/" component={HomePage} />
+              <Route path="/hunt" component={HuntPage} />
+              <Route path="/login" component={LoginPage} />
+            </AppFrame>
+          </Router>
+        </ReduxApolloProvider>
+      </Provider>
     );
   }
 }

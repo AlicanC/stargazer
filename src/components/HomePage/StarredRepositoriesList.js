@@ -10,6 +10,7 @@ import RepositoryView from '../RepositoryView';
 const StarredRepositoriesQuery = gql`
   query StarredRepositoriesQuery($cursor: String) {
     viewer {
+      id
       starredRepositories(first: 10, after: $cursor) {
         edges {
           node {

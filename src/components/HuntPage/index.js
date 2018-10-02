@@ -2,14 +2,21 @@
 
 import * as React from 'react';
 import { Container, Col, Row, Input } from 'reactstrap';
+import { connect } from 'react-redux';
+
+import LoginRequiredView from '../LoginRequiredView';
 
 import FoundRepositoriesList from './FoundRepositoriesList';
+
+type Props = {
+  token: ?string,
+};
 
 type State = {
   query: string,
 };
 
-export default class HuntPage extends React.Component<{}, State> {
+class HuntPage extends React.Component<Props, State> {
   state = {
     query: '',
   };
@@ -23,21 +30,32 @@ export default class HuntPage extends React.Component<{}, State> {
   };
 
   render() {
+    const { token } = this.props;
     const { query } = this.state;
 
     return (
       <Container>
-        <Row className="mb-3">
-          <Col>
-            <Input type="search" onChange={this.onQueryInputChange} />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <FoundRepositoriesList query={query} />
-          </Col>
-        </Row>
+        {token ? (
+          <>
+            <Row className="mb-3">
+              <Col>
+                <Input type="search" onChange={this.onQueryInputChange} />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <FoundRepositoriesList query={query} />
+              </Col>
+            </Row>
+          </>
+        ) : (
+          <LoginRequiredView />
+        )}
       </Container>
     );
   }
 }
+
+export default connect((state) => ({
+  token: state.token,
+}))(HuntPage);
