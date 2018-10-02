@@ -38,7 +38,8 @@ class LoginPage extends React.PureComponent<Props, void> {
     };
 
     const { clientId, redirectUri } = config;
-    const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}`;
+    const scope = ['public_repo'].join(' ');
+    const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`;
     window.open(authUrl);
   };
 
