@@ -80,6 +80,7 @@ export default compose(
         addStar(input: $input) {
           starrable {
             id
+            __typename
             viewerHasStarred
           }
         }
@@ -91,6 +92,17 @@ export default compose(
         variables: {
           input: {
             starrableId: props.repository.id,
+          },
+        },
+        optimisticResponse: {
+          __typename: 'Mutation',
+          addStar: {
+            __typename: 'AddStarPayload',
+            starrable: {
+              id: props.repository.id,
+              __typename: 'Repository',
+              viewerHasStarred: true,
+            },
           },
         },
       }),
@@ -113,6 +125,17 @@ export default compose(
         variables: {
           input: {
             starrableId: props.repository.id,
+          },
+        },
+        optimisticResponse: {
+          __typename: 'Mutation',
+          removeStar: {
+            __typename: 'AddStarPayload',
+            starrable: {
+              id: props.repository.id,
+              __typename: 'Repository',
+              viewerHasStarred: false,
+            },
           },
         },
       }),
