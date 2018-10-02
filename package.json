@@ -18,9 +18,6 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "resolutions": {
-    "react-dev-utils": "6.0.2"
-  },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.4",
     "@fortawesome/free-regular-svg-icons": "^5.3.1",
