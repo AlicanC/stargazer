@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { ListGroup, ListGroupItem } from 'reactstrap';
 
 import RepositoryView from '../RepositoryView';
 
@@ -66,11 +67,15 @@ function StarredRepositoriesList(props: Props) {
 
   return (
     <>
-      {starredRepositories.edges.map(({ node: repository }) => (
-        <RepositoryView key={repository.id} repository={repository} />
-      ))}
+      <ListGroup>
+        {starredRepositories.edges.map(({ node: repository }) => (
+          <ListGroupItem key={repository.id}>
+            <RepositoryView repository={repository} />
+          </ListGroupItem>
+        ))}
+      </ListGroup>
       {hasNextPage && (
-        <div>
+        <div className="my-3" style={{ textAlign: 'right' }}>
           <button onClick={fetchMore}>See More</button>
         </div>
       )}
