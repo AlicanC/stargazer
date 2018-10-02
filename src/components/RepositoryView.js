@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
+import { Row, Col } from 'reactstrap';
 
 type Props = {
   repository: Object,
@@ -15,14 +16,18 @@ function RepositoryView(props: Props) {
   const { name, url, viewerHasStarred } = repository;
 
   return (
-    <div>
-      <a href={url}>{name}</a>
-      {viewerHasStarred ? (
-        <button onClick={removeStar}>Starred</button>
-      ) : (
-        <button onClick={addStar}>Not Starred</button>
-      )}
-    </div>
+    <Row>
+      <Col>
+        <a href={url}>{name}</a>
+      </Col>
+      <Col style={{ textAlign: 'right' }}>
+        {viewerHasStarred ? (
+          <button onClick={removeStar}>Starred</button>
+        ) : (
+          <button onClick={addStar}>Not Starred</button>
+        )}
+      </Col>
+    </Row>
   );
 }
 
