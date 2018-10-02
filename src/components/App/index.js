@@ -12,7 +12,7 @@ import LoginPage from '../LoginPage';
 import ReduxApolloProvider from './ReduxApolloProvider';
 import createApplicationStore from '../../store';
 
-export default class App extends React.Component<{}, void> {
+export default class App extends React.PureComponent<{}, void> {
   store = createApplicationStore({
     initialState: {
       token: localStorage.getItem('token'),

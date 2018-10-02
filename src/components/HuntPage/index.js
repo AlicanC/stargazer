@@ -16,7 +16,7 @@ type State = {
   query: string,
 };
 
-class HuntPage extends React.Component<Props, State> {
+class HuntPage extends React.PureComponent<Props, State> {
   state = {
     query: '',
   };

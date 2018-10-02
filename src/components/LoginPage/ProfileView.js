@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import gql from 'graphql-tag';
-import styled from 'react-emotion';
+import styled from 'react-emotion/macro';
 
 const UserAvatarImage = styled('img')`
   border-radius: 30px;

@@ -7,7 +7,7 @@ import { Row, Col, Button } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faCodeBranch, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
-import styled from 'react-emotion';
+import styled from 'react-emotion/macro';
 
 const RepositoryLink = styled('a')`
   word-break: break-word;

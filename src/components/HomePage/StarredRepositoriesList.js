@@ -33,19 +33,13 @@ type Props = {
   data: any,
 };
 
-function StarredRepositoriesList(props: Props) {
-  const { data } = props;
+class StarredRepositoriesList extends React.PureComponent<Props, void> {
+  onMoreClick = () => {
+    const { data } = this.props;
 
-  if (data.loading) return <LoadingView />;
-  if (data.error) return 'Error: ' + data.error.message;
-
-  const { starredRepositories } = data.viewer;
-  const { hasNextPage } = starredRepositories.pageInfo;
-
-  const fetchMore = () => {
     data.fetchMore({
       variables: {
-        cursor: starredRepositories.pageInfo.endCursor,
+        cursor: data.viewer.starredRepositories.pageInfo.endCursor,
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
         const newEdges = fetchMoreResult.viewer.starredRepositories.edges;
@@ -67,24 +61,34 @@ function StarredRepositoriesList(props: Props) {
     });
   };
 
-  return (
-    <>
-      <ListGroup>
-        {starredRepositories.edges.map(({ node: repository }) => (
-          <ListGroupItem key={repository.id}>
-            <RepositoryView repository={repository} />
-          </ListGroupItem>
-        ))}
-      </ListGroup>
-      {hasNextPage && (
-        <div className="text-center my-3">
-          <Button onClick={fetchMore} color="info">
-            See More
-          </Button>
-        </div>
-      )}
-    </>
-  );
+  render() {
+    const { data } = this.props;
+
+    if (data.loading) return <LoadingView />;
+    if (data.error) return 'Error: ' + data.error.message;
+
+    const { starredRepositories } = data.viewer;
+    const { hasNextPage } = starredRepositories.pageInfo;
+
+    return (
+      <>
+        <ListGroup>
+          {starredRepositories.edges.map(({ node: repository }) => (
+            <ListGroupItem key={repository.id}>
+              <RepositoryView repository={repository} />
+            </ListGroupItem>
+          ))}
+        </ListGroup>
+        {hasNextPage && (
+          <div className="text-center my-3">
+            <Button onClick={this.onMoreClick} color="info">
+              See More
+            </Button>
+          </div>
+        )}
+      </>
+    );
+  }
 }
 
 export default graphql(StarredRepositoriesQuery)(StarredRepositoriesList);

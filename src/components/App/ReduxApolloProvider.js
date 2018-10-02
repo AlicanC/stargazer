@@ -16,7 +16,7 @@ type State = {
   apolloClient: ApolloClient,
 };
 
-class ReduxApolloProvider extends React.Component<Props, State> {
+class ReduxApolloProvider extends React.PureComponent<Props, State> {
   getApolloClientConfig = () => ({
     token: this.props.token,
   });

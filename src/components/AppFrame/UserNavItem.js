@@ -5,7 +5,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import styled from 'react-emotion';
+import styled from 'react-emotion/macro';
 
 const UserAvatarImage = styled('img')`
   border-radius: 10px;

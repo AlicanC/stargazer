@@ -13,7 +13,7 @@ type Props = {
   dispatch: Object,
 };
 
-class LoginPage extends React.Component<Props, void> {
+class LoginPage extends React.PureComponent<Props, void> {
   onLoginClick = () => {
     const { dispatch } = this.props;
 
