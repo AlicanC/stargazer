@@ -19,6 +19,14 @@ export default class App extends React.Component<{}, void> {
     },
   });
 
+  componentDidMount() {
+    this.store.subscribe(() => {
+      const { token } = this.store.getState();
+
+      localStorage.setItem('token', token);
+    });
+  }
+
   render() {
     return (
       <Provider store={this.store}>
