@@ -25,7 +25,7 @@ export default class App extends React.Component<{}, void> {
           <div>
             <ul>
               <li>
-                <Link to="/">Home</Link>
+                <Link to="/">Your Superstars</Link>
               </li>
               <li>
                 <Link to="/login">Login</Link>
