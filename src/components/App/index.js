@@ -1,9 +1,10 @@
 // @flow
 
 import * as React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { ApolloProvider } from 'react-apollo';
 
+import AppFrame from '../AppFrame';
 import HomePage from '../HomePage';
 import HuntPage from '../HuntPage';
 import LoginPage from '../LoginPage';
@@ -23,23 +24,11 @@ export default class App extends React.Component<{}, void> {
     return (
       <ApolloProvider client={apolloClient}>
         <Router>
-          <div>
-            <ul>
-              <li>
-                <Link to="/">Your Superstars</Link>
-              </li>
-              <li>
-                <Link to="/hunt">Hunt Superstars</Link>
-              </li>
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
-            </ul>
-            <hr />
+          <AppFrame>
             <Route exact path="/" component={HomePage} />
             <Route path="/hunt" component={HuntPage} />
             <Route path="/login" component={LoginPage} />
-          </div>
+          </AppFrame>
         </Router>
       </ApolloProvider>
     );
