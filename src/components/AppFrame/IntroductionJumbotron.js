@@ -12,11 +12,11 @@ export default function Introduction(props: Props) {
 
   return (
     <Jumbotron>
-      <h1 className="display-4">Welcome to Superstargazer!</h1>
+      <h1 className="display-5">Welcome to Superstargazer!</h1>
       <p className="lead">
         Use Superstargazer to see your starred GitHub repos and hunt for new repos to star!
       </p>
-      <div style={{ textAlign: 'right' }}>
+      <div className="text-right">
         <Button onClick={onDismissClick} color="primary">
           Dismiss
         </Button>

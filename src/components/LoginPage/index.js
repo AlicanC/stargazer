@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Container, Col, Row } from 'reactstrap';
+import { Container, Col, Row, Button } from 'reactstrap';
 import { connect } from 'react-redux';
 
 import ProfileView from './ProfileView';
@@ -37,16 +37,37 @@ class LoginPage extends React.Component<Props, void> {
 
     return (
       <Container>
-        {user && <ProfileView user={user} />}
-        <Row>
-          <Col style={{ textAlign: 'center' }}>
-            {user ? (
-              <button onClick={this.onLogoutClick}>Logout</button>
-            ) : (
-              <button onClick={this.onLoginClick}>Login</button>
-            )}
-          </Col>
-        </Row>
+        {user ? (
+          <>
+            <Row className="mb-3">
+              <Col className="text-center">
+                <ProfileView user={user} />
+              </Col>
+            </Row>
+            <Row>
+              <Col className="text-center">
+                <Button onClick={this.onLogoutClick} color="primary">
+                  Logout
+                </Button>
+              </Col>
+            </Row>
+          </>
+        ) : (
+          <>
+            <Row className="mb-3">
+              <Col className="text-center">
+                <h5>Login now to start hunting for superstar repos!</h5>
+              </Col>
+            </Row>
+            <Row>
+              <Col className="text-center">
+                <Button onClick={this.onLoginClick} color="primary">
+                  Login
+                </Button>
+              </Col>
+            </Row>
+          </>
+        )}
       </Container>
     );
   }

@@ -18,11 +18,18 @@ function HomePage(props: Props) {
   return (
     <Container>
       {token ? (
-        <Row>
-          <Col>
-            <StarredRepositoriesList />
-          </Col>
-        </Row>
+        <>
+          <Row className="mb-3">
+            <Col style={{ textAlign: 'center' }}>
+              <h5>Here are your superstar repos</h5>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <StarredRepositoriesList />
+            </Col>
+          </Row>
+        </>
       ) : (
         <Row>
           <Col>

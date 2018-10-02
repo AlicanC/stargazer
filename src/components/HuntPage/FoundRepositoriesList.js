@@ -3,8 +3,9 @@
 import * as React from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { ListGroup, ListGroupItem } from 'reactstrap';
+import { ListGroup, ListGroupItem, Button } from 'reactstrap';
 
+import LoadingView from '../LoadingView';
 import RepositoryView from '../RepositoryView';
 
 const FoundRepositoriesQuery = gql`
@@ -28,13 +29,14 @@ const FoundRepositoriesQuery = gql`
 `;
 
 type Props = {
+  query: string,
   data: any,
 };
 
 function FoundRepositoriesList(props: Props) {
   const { data } = props;
 
-  if (data.loading) return 'Loading...';
+  if (data.loading) return <LoadingView />;
   if (data.error) return 'Error: ' + data.error.message;
 
   const { search } = data;
@@ -72,8 +74,10 @@ function FoundRepositoriesList(props: Props) {
         ))}
       </ListGroup>
       {hasNextPage && (
-        <div className="my-3" style={{ textAlign: 'right' }}>
-          <button onClick={fetchMore}>See More</button>
+        <div className="text-center my-3">
+          <Button onClick={fetchMore} color="info">
+            See More
+          </Button>
         </div>
       )}
     </>

@@ -38,15 +38,23 @@ class HuntPage extends React.Component<Props, State> {
         {token ? (
           <>
             <Row className="mb-3">
+              <Col style={{ textAlign: 'center' }}>
+                <h5>Get ready to hunt!</h5>
+                Search for superstar repos and star them!
+              </Col>
+            </Row>
+            <Row className="mb-3">
               <Col>
                 <Input type="search" onChange={this.onQueryInputChange} />
               </Col>
             </Row>
-            <Row>
-              <Col>
-                <FoundRepositoriesList query={query} />
-              </Col>
-            </Row>
+            {query.length ? (
+              <Row>
+                <Col>
+                  <FoundRepositoriesList query={query} />
+                </Col>
+              </Row>
+            ) : null}
           </>
         ) : (
           <LoginRequiredView />

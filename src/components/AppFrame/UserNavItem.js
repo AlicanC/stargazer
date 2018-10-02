@@ -5,6 +5,12 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import styled from 'react-emotion';
+
+const UserAvatarImage = styled('img')`
+  border-radius: 10px;
+  width: 20px;
+`;
 
 type Props = {
   data: Object,
@@ -19,15 +25,10 @@ function UserNavItem(props: Props) {
     <NavItem>
       <NavLink tag={Link} to="/login">
         {user ? (
-          <div>
-            <img
-              className="mr-1"
-              src={user.avatarUrl}
-              alt={`${user.name}'s Avatar`}
-              style={{ width: '20px', borderRadius: '10px' }}
-            />
-            {user.name}
-          </div>
+          <>
+            <UserAvatarImage className="mr-1" src={user.avatarUrl} alt={`${user.name}'s Avatar`} />
+            <span>{user.name}</span>
+          </>
         ) : (
           'Login'
         )}

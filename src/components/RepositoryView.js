@@ -3,7 +3,15 @@
 import * as React from 'react';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Button } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar, faCodeBranch, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
+import styled from 'react-emotion';
+
+const RepositoryLink = styled('a')`
+  word-break: break-word;
+`;
 
 type Props = {
   repository: Object,
@@ -13,21 +21,37 @@ type Props = {
 
 function RepositoryView(props: Props) {
   const { repository, addStar, removeStar } = props;
-  const { name, url, viewerHasStarred } = repository;
+  const { nameWithOwner, url, viewerHasStarred, description, issues, pullRequests } = repository;
 
   return (
-    <Row>
-      <Col>
-        <a href={url}>{name}</a>
-      </Col>
-      <Col style={{ textAlign: 'right' }}>
-        {viewerHasStarred ? (
-          <button onClick={removeStar}>Starred</button>
-        ) : (
-          <button onClick={addStar}>Not Starred</button>
-        )}
-      </Col>
-    </Row>
+    <>
+      <Row className="mb-3">
+        <Col>
+          <RepositoryLink href={url}>{nameWithOwner}</RepositoryLink>
+          <div className="mt-2 d-block d-sm-none" />
+          <span className="ml-2 d-none d-sm-inline" />
+          <FontAwesomeIcon icon={faCodeBranch} /> {issues.totalCount}
+          <FontAwesomeIcon icon={faExclamationTriangle} className="ml-2" />{' '}
+          {pullRequests.totalCount}
+        </Col>
+        <Col style={{ textAlign: 'right' }}>
+          {viewerHasStarred ? (
+            <Button onClick={removeStar} color="warning">
+              <FontAwesomeIcon icon={faStar} /> Starred
+            </Button>
+          ) : (
+            <Button onClick={addStar} color="primary">
+              <FontAwesomeIcon icon={faStarRegular} /> Star
+            </Button>
+          )}
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <p>{description || <i>No description available.</i>}</p>
+        </Col>
+      </Row>
+    </>
   );
 }
 
@@ -35,9 +59,16 @@ RepositoryView.fragments = {
   repository: gql`
     fragment RepositoryViewRepository on Repository {
       id
-      name
+      nameWithOwner
       url
       viewerHasStarred
+      description
+      issues {
+        totalCount
+      }
+      pullRequests {
+        totalCount
+      }
     }
   `,
 };
