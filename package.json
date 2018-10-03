@@ -30,6 +30,7 @@
     "emotion": "^9.2.12",
     "firebase": "^5.5.2",
     "graphql": "^14.0.2",
+    "numeral": "^2.0.6",
     "react": "^16.5.2",
     "react-apollo": "^2.2.3",
     "react-dom": "^16.5.2",

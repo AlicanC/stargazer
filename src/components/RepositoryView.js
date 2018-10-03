@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faCodeBranch, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
 import styled from 'react-emotion/macro';
+import numeral from 'numeral';
 
 const RepositoryLink = styled('a')`
   word-break: break-word;
@@ -19,22 +20,45 @@ type Props = {
   removeStar: Function,
 };
 
+const formatNumber = (n: number) => numeral(n).format('0a');
+
 function RepositoryView(props: Props) {
   const { repository, addStar, removeStar } = props;
-  const { nameWithOwner, url, viewerHasStarred, description, issues, pullRequests } = repository;
+  const {
+    nameWithOwner,
+    url,
+    viewerHasStarred,
+    description,
+    hasIssuesEnabled,
+    issues,
+    pullRequests,
+    stargazers,
+  } = repository;
 
   return (
     <>
       <Row className="mb-3">
-        <Col>
-          <RepositoryLink href={url}>{nameWithOwner}</RepositoryLink>
-          <div className="mt-2 d-block d-sm-none" />
-          <span className="ml-2 d-none d-sm-inline" />
-          <FontAwesomeIcon icon={faCodeBranch} /> {issues.totalCount}
-          <FontAwesomeIcon icon={faExclamationTriangle} className="ml-2" />{' '}
-          {pullRequests.totalCount}
+        <Col xs={7} md={9}>
+          <Row>
+            <Col md="auto">
+              <RepositoryLink href={url}>{nameWithOwner}</RepositoryLink>
+            </Col>
+            <Col xs={12} md={5}>
+              <span>
+                <FontAwesomeIcon icon={faStar} /> {formatNumber(stargazers.totalCount)}
+              </span>
+              {hasIssuesEnabled && (
+                <span className="ml-2">
+                  <FontAwesomeIcon icon={faExclamationTriangle} /> {formatNumber(issues.totalCount)}
+                </span>
+              )}
+              <span className="ml-2">
+                <FontAwesomeIcon icon={faCodeBranch} /> {formatNumber(pullRequests.totalCount)}
+              </span>
+            </Col>
+          </Row>
         </Col>
-        <Col style={{ textAlign: 'right' }}>
+        <Col xs={5} md={3} style={{ textAlign: 'right' }}>
           {viewerHasStarred ? (
             <Button onClick={removeStar} color="warning">
               <FontAwesomeIcon icon={faStar} /> Starred
@@ -63,10 +87,14 @@ RepositoryView.fragments = {
       url
       viewerHasStarred
       description
+      hasIssuesEnabled
       issues {
         totalCount
       }
       pullRequests {
+        totalCount
+      }
+      stargazers {
         totalCount
       }
     }

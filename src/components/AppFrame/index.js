@@ -35,26 +35,26 @@ export default class AppFrame extends React.Component<Props, State> {
     const { isCollapseOpen, isIntroductionDismissed } = this.state;
 
     return (
-      <Container>
-        <Row className="mb-3">
-          <Col className="p-0">
-            <NavigationBar
-              isCollapseOpen={isCollapseOpen}
-              onToggleCollapseClick={this.onToggleCollapseClick}
-            />
-          </Col>
-        </Row>
-        {!isIntroductionDismissed && (
-          <Row>
-            <Col>
-              <IntroductionJumbotron onDismissClick={this.onIntroductionDismissClick} />
+      <>
+        <Container>
+          <Row className="mb-3">
+            <Col className="p-0">
+              <NavigationBar
+                isCollapseOpen={isCollapseOpen}
+                onToggleCollapseClick={this.onToggleCollapseClick}
+              />
             </Col>
           </Row>
-        )}
-        <Row>
-          <Col>{children}</Col>
-        </Row>
-      </Container>
+          {!isIntroductionDismissed && (
+            <Row>
+              <Col>
+                <IntroductionJumbotron onDismissClick={this.onIntroductionDismissClick} />
+              </Col>
+            </Row>
+          )}
+        </Container>
+        {children}
+      </>
     );
   }
 }
