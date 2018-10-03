@@ -50,7 +50,7 @@ class HuntPage extends React.PureComponent<Props, State> {
             </Row>
             {query.length ? (
               <Row>
-                <Col>
+                <Col className="px-0 px-sm-3">
                   <FoundRepositoriesList query={query} />
                 </Col>
               </Row>

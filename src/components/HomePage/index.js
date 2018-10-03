@@ -25,7 +25,7 @@ function HomePage(props: Props) {
             </Col>
           </Row>
           <Row>
-            <Col>
+            <Col className="px-0 px-sm-3">
               <StarredRepositoriesList />
             </Col>
           </Row>
