@@ -5,6 +5,7 @@ import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Container, Col, Row, Button } from 'reactstrap';
 import { connect } from 'react-redux';
+import firebase from 'firebase/app';
 
 import ProfileView from './ProfileView';
 
@@ -15,32 +16,24 @@ type Props = {
 };
 
 class LoginPage extends React.PureComponent<Props, void> {
-  async componentDidMount() {
-    const { dispatch, history } = this.props;
-
-    const params = new URLSearchParams(history.location.search);
-    const token = params.get('token');
-
-    if (token) {
-      dispatch.login(token);
-    }
-  }
-
   onLoginClick = () => {
-    // const { dispatch } = this.props;
-    // const token = prompt('Your GitHub token');
-    // if (!token) return;
-    // dispatch.login(token);
+    const { dispatch } = this.props;
 
-    const config = {
-      clientId: 'f84cc67f3f769f36f662',
-      redirectUri: 'https://alicanc-stargazer.herokuapp.com/github_callback',
-    };
+    const provider = new firebase.auth.GithubAuthProvider();
+    provider.addScope('public_repo');
+    provider.setCustomParameters({
+      allow_signup: 'false',
+    });
 
-    const { clientId, redirectUri } = config;
-    const scope = ['public_repo'].join(' ');
-    const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`;
-    window.open(authUrl);
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then((result) => {
+        if (result.credential) {
+          var token = result.credential.accessToken;
+          dispatch.login(token);
+        }
+      });
   };
 
   onLogoutClick = () => {
@@ -80,10 +73,6 @@ class LoginPage extends React.PureComponent<Props, void> {
             </Row>
             <Row>
               <Col className="text-center">
-                {/* <p>
-                  Create a GitHub token <a href="https://github.com/settings/tokens/new">here</a>{' '}
-                  and login.
-                </p> */}
                 <Button onClick={this.onLoginClick} color="primary">
                   Login
                 </Button>
