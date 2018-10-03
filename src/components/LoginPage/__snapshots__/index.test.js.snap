@@ -21,16 +21,6 @@ exports[`matches snapshot 1`] = `
     <div
       className="text-center col"
     >
-      <p>
-        Create a GitHub token 
-        <a
-          href="https://github.com/settings/tokens/new"
-        >
-          here
-        </a>
-         
-        and login.
-      </p>
       <button
         className="btn btn-primary"
         onClick={[Function]}
